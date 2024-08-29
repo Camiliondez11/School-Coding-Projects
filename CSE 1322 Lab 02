@@ -1,0 +1,185 @@
+/*
+Class: CSE1322L
+Section: CSE 1322/JO5
+Term: Fall 24
+Instructor: Deekshitha Atti
+Name: Cameron Hernandez
+Assignment#: Lab 02
+*/
+import java.util.Scanner;
+public class Driver {
+    public static void main(String[] args) {
+
+        //Scanner sc Variable
+        Scanner sc = new Scanner(System.in);
+
+        //Boolean Variable
+        boolean Continue = true;
+
+        //Initiating Milk values
+        StockItems Milk = new StockItems();
+        Milk.getName("Milk");
+        Milk.getDescription("1 Gallon of Milk");
+        Milk.getID(0);
+        Milk.getPrice(3.60);
+        Milk.getQuantity(15);
+
+        //Initiating Bread Values
+        StockItems Bread = new StockItems();
+        Bread.getName("Bread");
+        Bread.getDescription("1 Loaf of bread");
+        Bread.getID(1);
+        Bread.getPrice(1.98);
+        Bread.getQuantity(30);
+
+        //Boolean Loop for Menu
+        while(Continue == true) {
+            System.out.println("1. Sold One Milk");
+            System.out.println("2. Sold One Bread");
+            System.out.println("3. Change price of Milk");
+            System.out.println("4. Change price of Bread");
+            System.out.println("5. Add Milk to Inventory");
+            System.out.println("6. Add Bread to Inventory");
+            System.out.println("7. See Inventory");
+            System.out.println("8. Quit");
+            int choice = sc.nextInt();
+            {
+                switch (choice) {
+                    case 1:
+                            Milk.LowerQuantity();
+                        System.out.println();
+                        break;
+                    case 2:
+                        Bread.LowerQuantity();
+                        System.out.println();
+                        break;
+                    case 3:
+
+                        Milk.setPrice();
+
+                        break;
+                    case 4:
+
+                         Bread.setPrice();
+                        break;
+                    case 5:
+                        Milk.raiseQuantity();
+                        break;
+                    case 6:
+                        Bread.raiseQuantity();
+                        break;
+                    case 7:
+                        System.out.println();
+                        System.out.println(Milk.ToString());
+                        System.out.println(Bread.ToString());
+                        System.out.println();
+
+                        break;
+                    case 8:
+                        Continue = false;
+                        break;
+                }
+            }
+        }
+    }
+}
+
+
+
+Seperate file
+-------------------------------
+import java.util.Scanner;
+public class StockItems {
+
+    //Init Scanner
+    Scanner sc = new Scanner(System.in);
+
+    //Private Variables
+    private String Name;
+    private String Description;
+    private int ID;
+    private double Price;
+    private int Quantity;
+
+    //Getter
+    public void getName(String curName)
+    {
+        this.Name = curName;
+    }
+    public void getDescription(String curDescription)
+    {
+        this.Description = curDescription;
+
+    }
+    public void getID(int curID)
+    {
+        this.ID = curID;
+    }
+    public void getPrice(double curPrice)
+    {
+        this.Price = curPrice;
+    }
+    public  void getQuantity(int curQuantity)
+    {
+        this.Quantity = curQuantity;
+    }
+
+    //Setters
+    public double setPrice()
+    {
+        //Menu for Price Change
+        System.out.println();
+        System.out.println("What is the new price for " + this.Name + "?");
+        double priceChange = sc.nextDouble();
+        System.out.println();
+
+        if(priceChange < 0)
+        {
+            System.out.println("We aren't Paying customers for Items! Please pick a price above 0.");
+            System.out.println();
+        }
+        else if(priceChange >= 0) {
+            this.Price = priceChange;
+        }
+        return Price;
+    }
+    public int LowerQuantity()
+    {
+        if(this.Quantity <= 0)
+        {
+            System.out.println("Your sold out! You need to restock!");
+        }
+        else if (this.Quantity > 0) {
+
+
+            this.Quantity = this.Quantity - 1;
+
+        }
+        return Quantity;
+    }
+    public int raiseQuantity()
+    {
+        System.out.println("How much " + this.Name + " did we get?" );
+        int quantityChange = sc.nextInt();
+        if(quantityChange < 0)
+        {
+            System.out.println("You can't Un-stock! Pick a number a positive number!");
+        }else{
+            this.Quantity += quantityChange;
+        }
+        System.out.println();
+        return Quantity;
+
+    }
+
+    //Print Inventory
+    public String ToString()
+    {
+        return(this.Name + ": " + this.ID + " is " + this.Description + " has price " + this.Price + " we currently have " + this.Quantity + " in stock");
+    }
+
+
+
+
+
+}
