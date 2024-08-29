@@ -1,0 +1,86 @@
+/*
+Class: CSE1321L
+Section: J07 Java
+Term: Spring 24
+Instructor: Varshini Yaganti
+Name: Cameron Hernandez
+Assignment#: Assignment6C
+*/
+import java.util.Scanner;
+import java.util.Random;
+public class Assignment6C {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Random random = new Random(42);
+
+        //Grid size
+        System.out.println("[Minesweeper = DOS Edition]");
+        System.out.print("What is the grid size? ");
+        int gridSize = sc.nextInt();
+
+        //shows grid
+        char[][] myGrid = new char[gridSize][gridSize];
+        int remianingCells = gridSize + gridSize;
+        boolean hitMine = false;
+        int symbolCounter = 0;
+
+        //starts the grid
+        for (int i = 0; i < gridSize; i++) {
+            for (int n = 0; n < gridSize; n++) {
+                myGrid[i][n] = '?';
+            }
+        }
+        //outputs the first grid
+        printGrid(myGrid);
+
+        //Starts game
+        while(remianingCells > 0 && !hitMine)
+        {
+            System.out.print("Enter your x coordinate: ");
+            int x = sc.nextInt();
+            System.out.print("Enter your Y coordinate: ");
+            int y = sc.nextInt();
+
+            if(x < 0 || x >= gridSize || y < 0 || y >= gridSize){
+                System.out.println("Invalid x and y coordinates, please try again.");
+                continue;
+            }else
+            {
+                if(random.nextDouble() < 0.2)
+                {
+                    hitMine = true;
+
+                    myGrid[y][x] = 'X';
+
+                }else
+                {
+                    myGrid[y][x] = '_';
+                    symbolCounter++;
+                }
+
+            }
+            printGrid(myGrid);
+        }
+        //shows results
+        if(hitMine)
+        {
+            System.out.println("Sorry, you hit a mine!");
+        }else
+        {
+            System.out.println("You win!");
+        }
+
+    }
+    //Method for printGrid();
+    private static void printGrid(char[][] myGrid)
+    {
+        for (char[] row : myGrid)
+        {
+            for(char cell : row)
+            {
+                System.out.print(cell);
+            }
+            System.out.println();
+        }
+    }
+}
