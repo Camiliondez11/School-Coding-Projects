@@ -1,0 +1,186 @@
+/*
+Class: CSE1321L
+Section: J07 Java
+Term: Spring 24
+Instructor: Varshini Yaganti
+Name: Cameron Hernandez
+Assignment#: Assignment7B
+*/
+import java.util.Scanner;
+public class Assignment7B {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("[Portable Pix Map Art Program]");
+        System.out.print("Enter an image width: ");
+        int width = sc.nextInt();
+        System.out.print("Enter an image height: ");
+        int height = sc.nextInt();
+        System.out.print("Enter the fill color's red value: ");
+        int redValue = sc.nextInt();
+        System.out.print("Enter the fill color's green value: ");
+        int greenValue = sc.nextInt();
+        System.out.print("Enter the fill color's blue value: ");
+        int blueValue = sc.nextInt();
+
+        Pixel image = new Pixel(width, height, redValue, greenValue, blueValue);
+
+        while(true){
+            System.out.println("\nWhat will you do?");
+            System.out.println("1) Fill in a pixel");
+            System.out.println("2) Fill in a line");
+            System.out.println("3) Print the image");
+            System.out.println("4) Quit");
+            System.out.print("Choice? ");
+            int choice = sc.nextInt();
+
+            if(choice == 1)
+            {
+                System.out.print("\nRow: ");
+                int row = sc.nextInt();
+                System.out.print("Column: ");
+                int col = sc.nextInt();
+                System.out.print("New Red Color: ");
+                int newRed = sc.nextInt();
+                System.out.print("New Green Color: ");
+                int newGreen = sc.nextInt();
+                System.out.print("New Blue Color: ");
+                int newBlue = sc.nextInt();
+                image.fillPixel(row, col, newRed, newGreen, newBlue);
+
+            } else if (choice == 2) {
+                System.out.print("\nRow: ");
+                int row = sc.nextInt();
+                System.out.print("Column: ");
+                int col = sc.nextInt();
+                System.out.print("Length: ");
+                int length = sc.nextInt();
+                System.out.print("New Red Color: ");
+                int newRed = sc.nextInt();
+                System.out.print("New Green Color: ");
+                int newGreen = sc.nextInt();
+                System.out.print("New Blue Color: ");
+                int newBlue = sc.nextInt();
+                image.fillLine(row, col, length,  newRed, newGreen, newBlue);
+            } else if (choice == 3) {
+                System.out.println("P3");
+                System.out.println(width + " " + height);
+                System.out.println("255");
+                image.printRGB();
+            }else if(choice == 4){
+                System.out.println("P3");
+                System.out.println(width + " " + height);
+                System.out.println("255");
+                for(int row = 0; row < height; row++){
+                    for(int col = 0; col < width; col++){
+                        System.out.println(image.getRed(row, col) + " ");
+                        System.out.println(image.getGreen(row, col) + " ");
+                        System.out.println(image.getBlue(row, col) + " ");
+                    }
+                    System.out.println();
+                }
+                System.out.println("Closing...");
+                break;
+            }
+
+
+        }
+        sc.close();
+    }
+
+
+}
+------------------------
+public class Pixel {
+    private int width;
+    private int height;
+    private int[][] red;
+    private int[][] green;
+    private int[][] blue;
+
+    public Pixel(int width, int height, int redValue, int greenValue, int blueValue) {
+        this.width = width;
+        this.height = height;
+        red = new int[height][width];
+        green = new int[height][width];
+        blue = new int[height][width];
+
+        for(int row = 0; row < height; row++) {
+            for(int col = 0; col < width; col++) {
+                red[row][col] = redValue;
+                green[row][col] = greenValue;
+                blue[row][col] = blueValue;
+            }
+        }
+    }
+    public void fillPixel(int row, int col, int newRed, int newGreen, int newBlue) {
+        red[row][col] = newRed;
+        green[row][col] = newGreen;
+        blue[row][col] = newBlue;
+
+    }
+    public void fillLine(int row, int col, int length, int newRed, int newGreen, int newBlue) {
+        for(int i = 0; i < length; i++) {
+            int currentCol = col + i;
+            if(currentCol < width)
+            {
+                red[row][currentCol] = newRed;
+                green[row][currentCol] = newGreen;
+                blue[row][currentCol] = newBlue;
+            }
+        }
+    }
+    public void printRGB()
+    {
+        for(int row = 0; row < height; row++) {
+            for(int col = 0; col < width; col++) {
+                System.out.print(red[row][col] + " ");
+                System.out.print(green[row][col] + " ");
+                System.out.print(blue[row][col] + " ");
+
+            }
+            System.out.println();
+        }
+    }
+    public void printImage()
+    {
+        System.out.println("\nP3");
+        System.out.println(width + " " + height);
+        System.out.println("255");
+
+        for(int row = 0; row < height; row++) {
+            for(int col = 0; col < width; col++) {
+                System.out.println(red[row][col] + " ");
+                System.out.println(green[row][col] + " ");
+                System.out.println(blue[row][col] + " ");
+            }
+            System.out.println();
+        }
+    }
+    public int getRed(int row, int col) {
+        if(isValidCoordinate(row, col))
+        {
+            return red[row][col];
+        }else {
+            return 0;
+        }
+
+    }
+    public int getGreen(int row, int col) {
+        if(isValidCoordinate(row, col)){
+            return green[row][col];
+        }else {
+            return 0;
+        }
+    }
+    public int getBlue(int row, int col) {
+        if (isValidCoordinate(row, col))
+        {
+            return blue[row][col];
+        }else{
+            return 0;
+        }
+    }
+    private boolean isValidCoordinate(int row, int col) {
+        return row >= 0 && row < height && col >= 0 && col < width;
+    }
+}
