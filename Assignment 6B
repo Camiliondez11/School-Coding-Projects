@@ -1,0 +1,66 @@
+/*
+Class: CSE1321L
+Section: J07 Java
+Term: Spring 24
+Instructor: Varshini Yaganti
+Name: Cameron Hernandez
+Assignment#: Assignment6B
+*/
+import java.util.Scanner;
+import java.util.Arrays;
+
+public class Assignment6B {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int[] intArray = new int[8];
+        char[] charArray = new char[8];
+        float[] floatArray = new float[8];
+
+        System.out.println("[Overloaded Sort]");
+        System.out.print("What data type do you want to enter? ");
+        String dataTypeChoice = sc.nextLine();
+
+        for (int i = 0; i < 8; i++) {
+            System.out.print("Value " + (i + 1) + ": ");
+            switch (dataTypeChoice) {
+                default:
+                    System.out.println("Invalid data type, please enter int, char, or float.");
+                case "float":
+                    floatArray[i] = sc.nextFloat();
+                    break;
+                case "char":
+                    charArray[i] = sc.next().charAt(0);
+                    break;
+                case "int":
+                    intArray[i] = sc.nextInt();
+                    break;
+            }
+        }
+    }
+
+    public static void arraySort(int[] array) {
+        Arrays.sort(array);
+        System.out.print("The sorted values are:");
+        for (int value : array) {
+            System.out.print(value + ", ");
+        }
+    }
+
+    public static void arraySort(char[] array) {
+        Arrays.sort(array);
+        System.out.print("The sorted values are:");
+        for (char value : array) {
+            System.out.print(value + ", ");
+        }
+    }
+
+    public static void arraySort(float[] array) {
+        Arrays.sort(array);
+        System.out.print("The sorted values are:");
+        for (float value : array) {
+            System.out.print(value + ", ");
+        }
+    }
+}
+
